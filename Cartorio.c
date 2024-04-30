@@ -3,27 +3,27 @@
 #include <locale.h> //biblioteca de alocações de texto por regiões
 #include <string.h> //biblioteca responssável por cuidar das strings
 
-int registro()
+int registro()//criando a função registro
 {
 	
-	char arquivo[40];
-	char cpf[40];
-	char nome[40];
-	char sobrenome[40];
-	char cargo [40];
+	char arquivo[40];//criando o arquivo
+	char cpf[40];//alocando memoria para cpf
+	char nome[40];// memoria para nome
+	char sobrenome[40];//memoria para sobrenome
+	char cargo [40];//memoria para cargo
 	
-	printf("Digite o CPF a ser cadastrado: ");
-	scanf("%s", cpf);
+	printf("Digite o CPF a ser cadastrado: ");//solicitando o cpf
+	scanf("%s", cpf);//lendo e armazenando os dados digitados na strinq %s
 	
 	strcpy(arquivo, cpf);//Responsavel por copiar os valores das string
 	
 	FILE *file; //cria o arquivo
-	file = fopen(arquivo, "w");//cria o arquivo
-	fprintf(file,cpf);//salva o valor da variavel
-	fclose(file);
+	file = fopen(arquivo, "w");//abrindo o arquivo para escrever, criar o mesmo de fato
+	fprintf(file,cpf);//salva o valor da variavel no arquivo
+	fclose(file);// fechando o arquivo
 	
-	file = fopen(arquivo, "a");
-	fprintf(file,",");
+	file = fopen(arquivo, "a");//acrescentando dados ao arquivo 
+	fprintf(file,",");//dado à ser acrescentado
 	fclose(file);
 	
 	printf("Digite o nome a ser cadastrado: ");
@@ -67,30 +67,47 @@ int consulta()
 	char conteudo[200];
 	
 	printf("Digite o CPF a ser consultado: ");
-	scanf("%s", cpf);
+	scanf("%s", cpf);//coletando informação do usuario
 	
 	FILE *file;
-	file = fopen(cpf,"r");
+	file = fopen(cpf,"r");//abribdo o arquivo para ler
 	
 	if(file == NULL)
 	{
 		printf("Não foi possìvel abrir o arquivo, não localizado!.\n");
 	}
 	
-	while(fgets(conteudo, 200, file) != NULL)
+	while(fgets(conteudo, 200, file) != NULL)//incluindo erro para o usuario caso o cpf digitado nao exista
 	{
 		printf("\nEssas são as informações do usuário: ");
 		printf("%s", conteudo);
 		printf("\n\n");
 	}
-	
+	fclose(file);
 	system("pause");
 }
 
 int deletar()
 {
-	printf("Você escolheu deletar nomes!\n");
-	system("pause");
+	setlocale(LC_ALL, "Portuguese");
+	
+	char cpf[40];
+	
+	printf("Digite o CPF do usuário a ser deletado:");
+	scanf("%s",cpf);
+	
+	remove(cpf);
+	
+	FILE*file;
+	file = fopen(cpf,"r");
+	
+	if(file == NULL)
+	{
+		printf("O usuário não se encontra no sistema!\n");
+		system("pause");
+	}
+	
+	fclose(file);
 }
 
 int main()
